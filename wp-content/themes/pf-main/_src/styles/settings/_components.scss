@@ -1,0 +1,22 @@
+@import "../frontend/components/lightbox";
+@import "../frontend/components/social-sharing";
+
+@mixin add_component($name) {
+  @if $name == lightbox {
+    @include lightbox;
+  }
+  @if $name == social-sharing {
+    @include social-sharing;
+  }
+}
+
+@if(variable_exists('components')) {
+  @each $key,$val in $components {
+    @if map_get($components, $key) {
+      @include add_component($key);
+    }
+  }
+}
+
+
+

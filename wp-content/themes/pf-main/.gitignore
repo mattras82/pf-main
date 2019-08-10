@@ -1,0 +1,11 @@
+# Development
+/node_modules
+/_static
+/static
+test.*
+*.bak
+/config.json
+.idea
+
+# Assets
+/assets

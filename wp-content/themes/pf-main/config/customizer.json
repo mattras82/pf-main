@@ -1,0 +1,31 @@
+{
+  "header" : {
+    "title" : "Header",
+    "fields" : {
+      "logo" : {
+        "label" : "Logo",
+        "type" : "image",
+        "default" : "{{image logo.png}}"
+      }
+    }
+  },
+  "social": {
+    "title" : "Social Networks",
+    "fields" : "{{pf_fieldset_social}}"
+  },
+  "footer" : {
+    "title" : "Footer",
+    "fields" : {
+      "color" : {
+        "label" : "Text Color",
+        "type" : "color",
+        "default" : "#000000"
+      },
+      "logo" : {
+        "label" : "Logo",
+        "type" : "image",
+        "default" : "{{image logo.png}}"
+      }
+    }
+  }
+}

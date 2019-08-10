@@ -1,0 +1,136 @@
+@mixin lightbox {
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .lightbox {
+
+    &-ready {
+
+      .lightbox {
+        cursor: pointer;
+
+        &-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background-color: #333333;
+          opacity: 0;
+          transition: opacity 0.25s ease-out;
+          z-index: -5;
+        }
+
+        &-container {
+          position: fixed;
+          top: calc(50% - 1rem);
+          left: calc(50% - 1rem);
+          max-height: calc(100vh - 2rem);
+          max-width: calc(100vw - 2rem);
+          width: 100%;
+          transform: translate(-50%, -50%);
+          margin: 1rem;
+          padding: 1rem;
+          background: $white;
+          opacity: 0;
+          transition: opacity 0.25s ease-out;
+          z-index: -5;
+          overflow: auto;
+
+          > .lightbox-close {
+            float: right;
+            clear: both;
+            cursor: pointer;
+
+            & + * {
+              clear: both;
+            }
+          }
+
+          @include breakpoint(large) {
+            max-width: calc(#{map_get($breakpoints, large)} - 2rem);
+          }
+
+          @include breakpoint(xlarge) {
+            max-width: calc(#{map_get($breakpoints, large)} + 8rem);
+          }
+
+          &.lightbox {
+            &-iframe,
+            &-image,
+            &-video {
+              background: transparent;
+              height: calc(100vh - 2rem);
+              padding: 0;
+              overflow: initial;
+
+              .lightbox-close {
+                color: #ffffff;
+              }
+
+              iframe {
+                width: 100%;
+                height: calc(100% - 2.5rem);
+                margin-top: 0.5rem;
+              }
+
+              &.loading {
+                background: rgba(250,250,250,0.9);
+                width: 100%;
+                height: 100%;
+
+                &:before {
+                  content: ' ';
+                  position: absolute;
+                  top: calc(50% - 60px);
+                  left: calc(50% - 60px);
+                  border: 16px solid #f3f3f3;
+                  border-top: 16px solid $theme_color;
+                  border-radius: 50%;
+                  width: 120px;
+                  height: 120px;
+                  animation: spin 2s linear infinite;
+                }
+              }
+
+              video,
+              img {
+                width: auto;
+                display: block;
+                max-height: calc(100% - 2rem);
+                margin: 0 auto;
+                max-width: calc(100% - 2rem);
+                position: absolute;
+                top: calc(50% + 1rem);
+                left: 50%;
+                transform: translate(-50%, -50%);
+              }
+
+
+            }
+          }
+        }
+      }
+    }
+
+    &-open {
+      overflow: hidden;
+      max-height: 100vh;
+      max-width: 100vw;
+
+      .lightbox {
+        &-overlay {
+          opacity: 0.95;
+          z-index: 999998;
+        }
+
+        &-container {
+          opacity: 1;
+          z-index: 1999998;
+        }
+      }
+    }
+  }
+}

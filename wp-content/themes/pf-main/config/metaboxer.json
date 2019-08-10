@@ -1,0 +1,107 @@
+{
+  "kitchen_sink" : {
+    "name" : "Metaboxer Kitchen Sink",
+    "post_type" : "post",
+    "fields" : {
+      "text" : {
+        "type" : "text",
+        "label" : "Luke",
+        "description" : "This is a description",
+        "placeholder" : "I am your placeholder"
+      },
+      "check" : {
+        "type" : "checkbox",
+        "label" : "Check it out, yo!",
+        "value" : "test"
+      },
+      "checks" : {
+        "type" : "checkboxes",
+        "label" : "Testing multiple checkboxes",
+        "options" : {
+          "val-1" : "Label 1",
+          "val-2" : "Label 2"
+        },
+        "default" : "val-1"
+      },
+      "checks-2" : {
+        "type" : "checkboxes",
+        "label" : "Testing more checkboxes",
+        "options" : [
+          "One",
+          "Two",
+          "Four"
+        ]
+      },
+      "radiooos" : {
+        "type" : "radios",
+        "label" : "Movie Thyme",
+        "options" : {
+          "coach" : "Ed Harris",
+          "player" : "Cuba Gooding Jr"
+        },
+        "default" : "coach"
+      },
+      "select" : {
+        "type" : "select",
+        "label" : "Select Test",
+        "options" : {
+          "one" : "One",
+          "two" : "Two",
+          "quatro" : "Quatre"
+        },
+        "placeholder" : "Please choose one"
+      },
+      "posts" : {
+        "type" : "post",
+        "post_type" : "page",
+        "label" : "Related Page",
+        "placeholder" : "Select a page"
+      },
+      "testarea" : {
+        "type" : "textarea",
+        "label" : "Testing Stuff",
+        "placeholder" : "To be or not to be"
+      },
+      "pictest" : {
+        "type" : "image",
+        "label" : "Make it pretty"
+      },
+      "whatusee" : {
+        "type" : "wysiwyg",
+        "label" : "What You See Is What You Get",
+        "default" : "{{long_lorem}}"
+      },
+      "mandate" : {
+        "type" : "date",
+        "label" : "You got a man date?"
+      },
+      "louvre" : {
+        "type" : "gallery",
+        "label" : "This is the gallery",
+        "default" : "2",
+        "fields" : {
+          "text-test" : {
+            "type" : "text",
+            "label" : "This is a text field",
+            "placeholder" : "Je ne sais pas"
+          },
+          "image-test" : {
+            "type" : "image",
+            "label" : "Choisissez une image, s'il vous plait"
+          }
+        }
+      },
+      "media" : {
+        "type" : "media",
+        "label" : "Upload any file",
+        "description" : "Use this field type to upload file type, such as PDF or CSV"
+      },
+      "multi-post" : {
+        "type" : "multi_post",
+        "label" : "ALL THE POSTS",
+        "post_type" : "post",
+        "description" : "Use this field type when you need a 'One to Many' relationship between objects."
+      }
+    }
+  }
+}

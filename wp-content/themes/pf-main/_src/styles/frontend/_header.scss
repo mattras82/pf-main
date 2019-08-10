@@ -1,0 +1,9 @@
+.header {
+  background-color: $topbar-background;
+  padding-bottom: $topbar-padding;
+  padding-top: $topbar-padding;
+
+  &__search-form {
+    margin-left: auto;
+  }
+}

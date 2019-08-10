@@ -1,0 +1,16 @@
+{
+  "testimonial" : {
+    "singular"      : "Testimonial",
+    "menu_icon"     : "dashicons-smiley",
+    "supports"      : ["title", "excerpt"],
+    "has_archive"   : false
+  },
+  "page" : {
+    "labels" : {
+      "featured_image" : "Hero Banner",
+      "set_featured_image" : "Set hero banner",
+      "remove_featured_image" : "Remove hero banner",
+      "use_featured_image" : "Use as hero banner"
+    }
+  }
+}

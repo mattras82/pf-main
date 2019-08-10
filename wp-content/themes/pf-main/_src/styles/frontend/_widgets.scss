@@ -1,0 +1,27 @@
+.widget {
+  margin-bottom: 20px;
+}
+
+.widget-title {
+  font-size: rem-calc(20);
+  font-weight: normal;
+  margin: 0;
+}
+
+.widget_calendar table {
+  width: 100%;
+
+  #next {
+    text-align: right;
+  }
+}
+
+.widget_nav_menu .menu {
+  flex-wrap: nowrap;
+  flex-direction: column;
+
+  a {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

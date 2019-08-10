@@ -1,0 +1,23 @@
+.pfwp-customize {
+  &-control {
+    float: none;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    &:not(.pfwp-customize-control-select2){
+      overflow: hidden;
+    }
+  }
+
+  @import "admin/customizer/accordion";
+  @import "admin/customizer/range-slider";
+  @import "admin/customizer/switch";
+  @import "admin/customizer/layout";
+}
+
+[id*="pf-metabox"] {
+  @import "admin/metaboxer/quick-box";
+  @import "admin/metaboxer/image-quick-box";
+  @import "admin/metaboxer/tabs";
+}

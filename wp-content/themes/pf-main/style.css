@@ -1,0 +1,16 @@
+/*
+  Theme Name: PublicFunction WordPress Theme
+  Theme URI: https://www.github.com/mattras82/pf-main
+  Template: pf-parent-theme
+  Description: This is a WordPress theme developed by PublicFunction
+  Version: 1.0.0
+  Author: Public Function
+  Author URI: https://www.github.com/mattras82
+  License: GPL-3.0+
+  License URI: http://www.gnu.org/licenses/gpl-3.0.txt
+  Textdomain: pf-main
+
+  Static CSS is not used in this theme. Public Function uses WebPack to transpile
+  SCSS files into the CSS that is used on the site. See _src/styles in the theme
+  directory to find what you are looking for.
+*/

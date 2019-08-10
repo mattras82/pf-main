@@ -1,0 +1,30 @@
+$error-color: get-color(alert);
+
+form {
+  label.error {
+    display: block;
+    color: $error-color;
+    position: absolute;
+    bottom: -21px;
+    font-size: 12px;
+    width: 100%;
+  }
+
+  input.error,
+  input.error:focus {
+    border-color: $error-color;
+  }
+
+  .wpcf7-form-control-wrap {
+    display: block;
+  }
+
+  .wpcf7-validation-errors {
+    margin: rem-calc(32 0 16);
+    border-color: get-color(warning);
+  }
+}
+
+textarea {
+  resize: vertical;
+}
