@@ -33,8 +33,17 @@
     background-color: $body-background;
   }
 
+  .margin-top-auto {
+    margin-top: auto;
+  }
+
   p {
     margin-top: 0.5rem;
     font-size: 1.25rem;
+
+    &.copyright {
+      margin-top: 0;
+      font-size: 0.85rem;
+    }
   }
 }
