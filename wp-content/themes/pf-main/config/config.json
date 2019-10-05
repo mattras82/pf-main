@@ -1,8 +1,8 @@
 {
   "debug": false,
   "env": {
-    "development": true,
-    "production": false
+    "development": false,
+    "production": true
   },
   "theme": {
     "name": "PublicFunction WordPress Theme",
@@ -36,5 +36,5 @@
   "wpcf7_includes": "all",
   "use_jquery_migrate": false,
   "version": "1.0.0",
-  "build": "99w2pvt"
+  "build": "2kslhw8q"
 }

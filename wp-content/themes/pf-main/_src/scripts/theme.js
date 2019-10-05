@@ -39,6 +39,11 @@ import './frontend/slick-carousel';
 import './frontend/lazy-images';
 import pwa from './frontend/pwa';
 import './frontend/component-loader';
+import TypeIt from './frontend/type-it';
+
+let modules = [];
+
+modules.push(TypeIt);
 
 $(document).ready(function() {
   // FOUNDATION
@@ -49,5 +54,17 @@ $(document).ready(function() {
   $('.wpcf7-tel').mask('(200) 000-0000');
 
   //Initialize Progressive Web App support
-  pwa.init();
+  //pwa.init();
+
+  modules.forEach(module => {
+    let mod = new module();
+    if (mod && mod.activeSelector) {
+      console.log('active selector', mod.activeSelector);
+      let $els = document.querySelectorAll(mod.activeSelector);
+      console.log('els', $els);
+      if ($els.length > 0) {
+        mod.init($els);
+      }
+    }
+  });
 });
