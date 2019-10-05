@@ -1,0 +1,70 @@
+$fade-distance: rem-calc(50);
+
+@include b(type-it) {
+    visibility: hidden;
+    opacity: 0;
+
+    @include m(processing) {
+        visibility: visible;
+        opacity: 0;
+    }
+
+    @include m(waiting) {
+        visibility: visible;
+        opacity: 0;
+    }
+
+    @include m(show) {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    @include e(blink) {
+        opacity: 1;
+        display: inline-block;
+        font-size: 110%;
+        animation-name: blink;
+        animation-iteration-count: infinite;
+        animation-duration: 725ms;
+    }
+
+    @include m(after) {
+        &.type-it--fade-up,
+        &.type-it--fade-down,
+        &.type-it--fade-left,
+        &.type-it--fade-right {
+            transition: opacity 350ms ease-in-out, transform 300ms ease-in-out;
+
+            &.type-it--show {
+                transform: none;
+            }
+        }
+
+        &.type-it--fade-up {
+            transform: translateY($fade-distance);
+        }
+
+        &.type-it--fade-down {
+            transform: translateY(-$fade-distance);
+        }
+
+        &.type-it--fade-left {
+            transform: translateX($fade-distance);
+        }
+
+        &.type-it--fade-right {
+            transform: translateX(-$fade-distance);
+        }
+    }
+}
+
+.no-js {
+    @include b(type-it) {
+        visibility: visible;
+        opacity: 1;
+
+        @include m(after) {
+            transform: none;
+        }
+    }
+}
