@@ -1,0 +1,1 @@
+<span>PWA Cache Status: <em aria-hidden="true" class="fas fa-times pwa-status"></em></span>

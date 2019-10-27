@@ -21,6 +21,25 @@ function addCurrentPage(worker = null) {
   }
 }
 
+function updateStatus(status = '') {
+  let icon = document.querySelector('.pwa-status');
+  if (icon) {
+    switch (status) {
+      case 'installed':
+        icon.classList.remove('fa-times', 'fa-sync', 'fa-spin');
+        icon.classList.add('fa-check');
+        break;
+      case 'installing':
+        icon.classList.remove('fa-times', 'fa-check');
+        icon.classList.add('fa-sync', 'fa-spin');
+        break;
+      default:
+        icon.classList.remove('fa-check', 'fa-sync', 'fa-spin');
+        icon.classList.add('fa-times');
+    }
+  }
+}
+
 function registerSW() {
   if (window.location.protocol !== 'https:')
     return errorMessage('This site is not using HTTPS, which is required by PWA standards.');
@@ -28,8 +47,13 @@ function registerSW() {
     navigator.serviceWorker.getRegistration().then(reg => {
       if (typeof reg === 'object' && reg.active) {
         // We've already registered this service worker
+        updateStatus('installed');
+        reg.onupdatefound = function () {
+          updateStatus('installing');
+        };
         return true;
       } else {
+        updateStatus('installing');
         navigator.serviceWorker.register('/sw.js').then((registration) => {
           let worker = null;
           if (registration.installing) {
@@ -50,6 +74,10 @@ function registerSW() {
         });
       }
     });
+
+    navigator.serviceWorker.oncontrollerchange = function () {
+      updateStatus('installed');
+    };
   }
 }
 
@@ -69,7 +97,11 @@ function init($button) {
   if (!config.env.production) {
     return warningMessage('Please run WebPack under production mode to register the service worker');
   }
+  if (location.pathname !== '/pwa/')
+    return false;
+  
   registerSW();
+  $button = document.querySelector('#add2home');
   if ($button) {
     listenForPrompt($button);
 

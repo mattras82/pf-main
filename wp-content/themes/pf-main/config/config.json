@@ -1,11 +1,11 @@
 {
   "debug": false,
   "env": {
-    "development": false,
-    "production": true
+    "development": true,
+    "production": false
   },
   "theme": {
-    "name": "PublicFunction WordPress Theme",
+    "name": "Public Function, LLC Website",
     "short_name": "pf-main",
     "description": "This is a WordPress theme developed by PublicFunction"
   },
@@ -36,5 +36,5 @@
   "wpcf7_includes": "all",
   "use_jquery_migrate": false,
   "version": "1.0.0",
-  "build": "2kslhw8q"
+  "build": "2ksjpltd"
 }

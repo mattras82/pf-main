@@ -1,0 +1,9 @@
+{
+  "short_name" : "Public Func",
+  "background_color" : "#101020",
+  "icons": [
+  ],
+  "start_url": "/?utm_source=pwa",
+  "display": "standalone",
+  "scope": "/"
+}

@@ -1,0 +1,11 @@
+@include b(hero) {
+
+    @include m(full) {
+        width: 100vw;
+        min-height: 100vh;
+    }
+
+    @include e(content) {
+        flex: 0 auto;
+    }
+}

@@ -54,14 +54,12 @@ $(document).ready(function() {
   $('.wpcf7-tel').mask('(200) 000-0000');
 
   //Initialize Progressive Web App support
-  //pwa.init();
+  pwa.init();
 
   modules.forEach(module => {
     let mod = new module();
     if (mod && mod.activeSelector) {
-      console.log('active selector', mod.activeSelector);
       let $els = document.querySelectorAll(mod.activeSelector);
-      console.log('els', $els);
       if ($els.length > 0) {
         mod.init($els);
       }
