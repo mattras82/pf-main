@@ -1,12 +1,5 @@
-const CACHE_NAME = 'pf-main-2kskcozx-site-cache';
-const urlsToCache = [
-	location.origin,
-	location.origin + '/offline.html',
-	location.origin + '/wp-content/themes/pf-main/assets/images/logo.png',
-	location.origin + '/wp-content/themes/pf-main/assets/jquery.min.js',
-	location.origin + '/wp-content/themes/pf-main/assets/theme.css?ver=2kskcozx',
-	location.origin + '/wp-content/themes/pf-main/assets/theme.js?ver=2kskcozx',
-]
+const CACHE_NAME = '[short_name]-site-cache';
+[urlsToCache]
 
 self.addEventListener('install', function (event) {
   // Perform install steps

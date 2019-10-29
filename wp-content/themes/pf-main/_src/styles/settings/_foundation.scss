@@ -70,8 +70,9 @@ $global-width: rem-calc(1200);
 $global-lineheight: 1.5;
 $foundation-palette: (
   primary: $theme_color,
-  secondary: #ff6332,
-  tertiary: #ffc3b2,
+  secondary: #7006bb,
+  tertiary: #ff6332,
+  quarternary: #ffc3b2,
   success: #3adb76,
   warning: #ffae00,
   alert: #cc4b37
@@ -288,7 +289,7 @@ $button-background: $primary-color;
 $button-background-hover: scale-color($button-background, $lightness: -15%);
 $button-color: $white;
 $button-color-alt: $black;
-$button-radius: $global-radius;
+$button-radius: 4px;
 $button-hollow-border-width: 1px;
 $button-sizes: (
   tiny: 0.6rem,

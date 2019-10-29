@@ -14,6 +14,7 @@ function warningMessage(m) {
 
 function addCurrentPage(worker = null) {
   if (worker && worker.state === 'activated') {
+    updateStatus('installed');
     worker.postMessage({
       action: 'cache',
       url: location.href
@@ -24,19 +25,45 @@ function addCurrentPage(worker = null) {
 function updateStatus(status = '') {
   let icon = document.querySelector('.pwa-status');
   if (icon) {
+    icon.classList.remove('fa-times', 'fa-sync', 'fa-spin', 'fa-pause-circle');
     switch (status) {
       case 'installed':
-        icon.classList.remove('fa-times', 'fa-sync', 'fa-spin');
         icon.classList.add('fa-check');
         break;
       case 'installing':
-        icon.classList.remove('fa-times', 'fa-check');
         icon.classList.add('fa-sync', 'fa-spin');
         break;
+      case 'waiting':
+        icon.classList.add('fa-pause-circle');
+        break;
       default:
-        icon.classList.remove('fa-check', 'fa-sync', 'fa-spin');
         icon.classList.add('fa-times');
     }
+  }
+}
+
+function updateWorker(reg = null) {
+  if (reg) {
+    updateStatus('installing');
+    const installingWorker = reg.installing;
+    installingWorker.onstatechange = () => {
+      if (installingWorker.state === 'installed' &&
+        navigator.serviceWorker.controller) {
+        let $button = document.querySelector('#update-sw');
+        if ($button) {
+          $button.classList.add('active');
+          updateStatus('waiting');
+
+          $button.addEventListener('click', (e) => {
+            e.preventDefault();
+            installingWorker.postMessage({
+              action: 'skipWaiting'
+            });
+            setTimeout(() => { location.reload()}, 1000);
+          });
+        }
+      }
+    };
   }
 }
 
@@ -48,11 +75,12 @@ function registerSW() {
       if (typeof reg === 'object' && reg.active) {
         // We've already registered this service worker
         updateStatus('installed');
-        reg.onupdatefound = function () {
-          updateStatus('installing');
-        };
+        reg.onupdatefound = () => { updateWorker(reg) };
         return true;
       } else {
+        if (location.pathname.indexOf('pwa') === -1)
+          return false;
+
         updateStatus('installing');
         navigator.serviceWorker.register('/sw.js').then((registration) => {
           let worker = null;
@@ -74,10 +102,6 @@ function registerSW() {
         });
       }
     });
-
-    navigator.serviceWorker.oncontrollerchange = function () {
-      updateStatus('installed');
-    };
   }
 }
 
@@ -97,8 +121,6 @@ function init($button) {
   if (!config.env.production) {
     return warningMessage('Please run WebPack under production mode to register the service worker');
   }
-  if (location.pathname !== '/pwa/')
-    return false;
   
   registerSW();
   $button = document.querySelector('#add2home');

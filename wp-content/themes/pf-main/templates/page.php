@@ -7,6 +7,9 @@
                 <div class="type-it type-it--after type-it--fade-left" data-type-it-delay="500">
                     <?php the_content() ?>
                 </div>
+                <?php if (get_post()->post_name === 'pwa') {
+                    pf_partial('pwa');
+                } ?>
             </div>
             <p class="h1 type-it">}</p>
         </div>

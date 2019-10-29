@@ -1,8 +1,8 @@
 {
   "debug": false,
   "env": {
-    "development": true,
-    "production": false
+    "development": false,
+    "production": true
   },
   "theme": {
     "name": "Public Function, LLC Website",
@@ -36,5 +36,5 @@
   "wpcf7_includes": "all",
   "use_jquery_migrate": false,
   "version": "1.0.0",
-  "build": "2ksjpltd"
+  "build": "2kskcozx"
 }
