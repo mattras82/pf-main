@@ -253,6 +253,7 @@ function handleClick(e) {
       let $el = null;
       if ($el = document.querySelector(anchor)) {
         content = $el;
+        if (!content.classList.contains('lightbox-loaded')) preLoadContent(content);
         $contentParent = $el.parentNode;
       }
     }

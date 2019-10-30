@@ -12,14 +12,17 @@ function warningMessage(m) {
   return false;
 }
 
-function addCurrentPage(worker = null) {
-  if (worker && worker.state === 'activated') {
-    updateStatus('installed');
-    worker.postMessage({
-      action: 'cache',
-      url: location.href
-    });
+function sendMessage(worker = null, message = {}) {
+  if (worker && ['activated', 'installed'].indexOf(worker.state) > -1) {
+    worker.postMessage(message);
   }
+}
+
+function addCurrentPage(worker = null) {
+  sendMessage(worker, {
+    action: 'cache',
+    url: location.href
+  });
 }
 
 function updateStatus(status = '') {
@@ -56,7 +59,7 @@ function updateWorker(reg = null) {
 
           $button.addEventListener('click', (e) => {
             e.preventDefault();
-            installingWorker.postMessage({
+            sendMessage(installingWorker, {
               action: 'skipWaiting'
             });
             setTimeout(() => { location.reload()}, 1000);
@@ -105,6 +108,18 @@ function registerSW() {
   }
 }
 
+function removeSW() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistration().then(reg => {
+      if (!reg) return false;
+      if (reg.active) {
+        sendMessage(reg.active, {action: 'remove'});
+      }
+      reg.unregister();
+    });
+  }
+}
+
 function listenForPrompt($button) {
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
@@ -118,24 +133,28 @@ function listenForPrompt($button) {
 // This functionality is still in dev mode for most browsers, so it is not
 // implemented by default.
 function init($button) {
-  if (!config.env.production) {
-    return warningMessage('Please run WebPack under production mode to register the service worker');
-  }
-  
-  registerSW();
-  $button = document.querySelector('#add2home');
-  if ($button) {
-    listenForPrompt($button);
+  if (config.use_pwa) {
+    if (!config.env.production) {
+      return warningMessage('Please run WebPack under production mode to register the service worker');
+    }
 
-    $button.addEventListener('click', function (e) {
-      e.preventDefault();
-      $button.classList.remove('active');
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice
-        .then((choiceResult) => {
-          deferredPrompt = null;
-        });
-    });
+    registerSW();
+    $button = document.querySelector('#add2home');
+    if ($button) {
+      listenForPrompt($button);
+
+      $button.addEventListener('click', function (e) {
+        e.preventDefault();
+        $button.classList.remove('active');
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice
+          .then((choiceResult) => {
+            deferredPrompt = null;
+          });
+      });
+    }
+  } else {
+    removeSW();
   }
 }
 

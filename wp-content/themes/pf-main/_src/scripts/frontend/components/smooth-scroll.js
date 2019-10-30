@@ -27,31 +27,42 @@ class SmoothScroll {
     this.iterations = Math.ceil(this.duration / interval);
     this.scrollChunk = this.distance / this.iterations;
     this.iteration = 0;
+    this.animating = false;
   }
 
   run() {
-    if (window.gcSmoothScroll) return false;
+    if (window.pfSmoothScroll) return false;
     if (document.querySelector('.lightbox-transition, .lightbox-open')) {
       document.addEventListener('lightbox-closed', this.smoothScroll.bind(this), {once:true});
       return false;
     }
     this.interval = setInterval(this.smoothScroll.bind(this), interval);
-    window.gcSmoothScroll = true;
+    window.pfSmoothScroll = true;
   }
 
   stop() {
     clearInterval(this.interval);
     if (cookies.get('smooth-scroll')) cookies.delete('smooth-scroll');
-    window.gcSmoothScroll = undefined;
+    window.pfSmoothScroll = undefined;
+  }
+
+  scroll(yPos) {
+    if (!this.animating) {
+      window.requestAnimationFrame(function () {
+        window.scrollTo(0, yPos);
+        this.animating = false;
+      });
+      this.animating = true;
+    }
   }
 
   smoothScroll() {
     if (this.iteration === this.iterations) {
-      window.scrollTo(0, this.destination);
+      this.scroll(this.destination);
       this.stop();
     } else {
       let scrollPos = this.scrollingDown ? window.pageYOffset + this.scrollChunk : window.pageYOffset - this.scrollChunk;
-      window.scrollTo(0, scrollPos);
+      this.scroll(scrollPos);
       this.iteration++;
     }
   }
@@ -63,6 +74,13 @@ function processDestination($dest, e = false) {
   if (e) e.preventDefault();
   let scroller = new SmoothScroll(destination);
   scroller.run();
+}
+
+function processHref(href, e = false) {
+  let $dest = document.querySelector(href);
+  if ($dest) {
+    processDestination($dest, e);
+  }
 }
 
 function handleClick(e) {
@@ -80,10 +98,7 @@ function handleClick(e) {
     cookies.set('smooth-scroll', id, 1);
     if (dest[0]) location.href = dest[0];
   } else if (href.startsWith('#')) {
-    let $dest = document.querySelector($link.getAttribute('href'));
-    if ($dest) {
-      processDestination($dest, e);
-    }
+    processHref(href, e);
   }
 }
 
@@ -91,6 +106,9 @@ function init($links) {
   $links.forEach(($link) => {
     $link.addEventListener('click', handleClick);
   });
+}
+
+function pageLoad() {
   let pageLoad = cookies.get('smooth-scroll');
   if (pageLoad) {
     let $dest = document.querySelector(pageLoad);
@@ -100,7 +118,11 @@ function init($links) {
   }
 }
 
+window.addEventListener('load', pageLoad);
+
 export {
   activeSelector,
   init
 }
+
+export const smoothScroll = processHref;
