@@ -1,11 +1,11 @@
-const CACHE_NAME = 'pf-main-2kskcozx-site-cache';
+const CACHE_NAME = 'pf-main-2ksm4bt4-site-cache';
 const urlsToCache = [
 	location.origin,
 	location.origin + '/offline.html',
 	location.origin + '/wp-content/themes/pf-main/assets/images/logo.png',
 	location.origin + '/wp-content/themes/pf-main/assets/jquery.min.js',
-	location.origin + '/wp-content/themes/pf-main/assets/theme.css?ver=2kskcozx',
-	location.origin + '/wp-content/themes/pf-main/assets/theme.js?ver=2kskcozx',
+	location.origin + '/wp-content/themes/pf-main/assets/theme.css?ver=2ksm4bt4',
+	location.origin + '/wp-content/themes/pf-main/assets/theme.js?ver=2ksm4bt4',
 ]
 
 self.addEventListener('install', function (event) {
@@ -116,6 +116,9 @@ self.addEventListener('message', function (event) {
       });
     } else if (action === 'skipWaiting') {
       self.skipWaiting();
+    } else if (action === 'log' && event.data.message) {
+      console.log('hello from service worker');
+      console.log(event.data.message);
     }
   }
 });

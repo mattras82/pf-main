@@ -1,85 +1,31 @@
-@mixin clearfix {
-    &:before, &:after {
-      content: " ";
-      display: table;
-    }
-  
-    &:after {
-      clear: both;
-    }
-  }
-  
-  @mixin screen-reader-text() {
-    clip: rect(1px, 1px, 1px, 1px);
-    height: 1px;
-    overflow: hidden;
-    position: absolute !important;
-    width: 1px;
-  }
-  
-  @mixin fa ($which) {
-    font-family: 'Font Awesome 5 Free', sans-serif;
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    font-weight: 900;
-    content: $which;
-  }
-  
-  //Creates an animation using shorthand and prefixed properties
-  @mixin animation($animate...) {
-    $max: length($animate);
-    $animations: '';
-  
-    @for $i from 1 through $max {
-      $animations: #{$animations + nth($animate, $i)};
-      @if $i < $max {
-        $animations: #{$animations + ", "};
-      }
-    }
-    animation: $animations;
-  }
-  
-  @mixin single-transition($transition: all 0.2s ease) {
-    transition: $transition;
-  }
-  
-  //Vertically centers a div inside the parent. Parent must have position: relative
-  @mixin v-align() {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    -ms-transform:translateY(-50%); /* IE */
-    -moz-transform:translateY(-50%); /* Firefox */
-    -webkit-transform:translateY(-50%); /* Safari and Chrome */
-    -o-transform:translateY(-50%);
-  }
-  
-  //Make the transition properties for the site standardized
-  @mixin transition($prop: all) {
-    -webkit-transition: $prop 300ms ease;
-    -moz-transition: $prop 300ms ease;
-    -ms-transition: $prop 300ms ease;
-    -o-transition: $prop 300ms ease;
-    transition: $prop 300ms ease;
-  }
-  
-  @mixin animate($keyframe, $duration: 300ms, $delay: 0) {
-    -webkit-animation: $keyframe $duration ease $delay 1 normal forwards;
-    -moz-animation: $keyframe $duration ease $delay 1 normal forwards;
-    -o-animation: $keyframe $duration ease $delay 1 normal forwards;
-    animation: $keyframe $duration ease $delay 1 normal forwards;
-  }
-  
-  @mixin responsive_text($from: 12, $to: 18) {
-    font-size: calc(#{$from+"px"} + (#{$to} - #{$from}) * (100vw - 350px) / (1700 - 350));
-  }
+@function responsive_sizing($from: 100, $to: 200) {
+  @return calc(#{$from+"px"} + (#{$to} - #{$from}) * (100vw - 350px) / (1700 - 350));
+}
 
-  //BEM is life
+@mixin responsive_text($from: 12, $to: 18) {
+  font-size: responsive_sizing($from, $to);
+}
+
+//Vertically centers a div inside the parent. Parent must have position: relative
+@mixin v-align() {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -ms-transform:translateY(-50%); /* IE */
+  -moz-transform:translateY(-50%); /* Firefox */
+  -webkit-transform:translateY(-50%); /* Safari and Chrome */
+  -o-transform:translateY(-50%);
+}
+
+//BEM is life
 $elementSeparator: '__';
 $modifierSeparator: '--';
+
+@function selectorToString($selector) {
+  $selector: inspect($selector); //cast to string
+  $selector: str-slice($selector, 2, -2); //remove brackets
+  @return $selector;
+}
 
 @function containsModifier($selector) {
   $selector: selectorToString($selector);
@@ -88,12 +34,6 @@ $modifierSeparator: '--';
   } @else {
     @return false;
   }
-}
-
-@function selectorToString($selector) {
-  $selector: inspect($selector); //cast to string
-  $selector: str-slice($selector, 2, -2); //remove brackets
-  @return $selector;
 }
 
 @function getBlock($selector) {

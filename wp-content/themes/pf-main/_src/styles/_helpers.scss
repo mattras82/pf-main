@@ -43,3 +43,50 @@ h2,
         }
     }
 }
+
+.section {
+    &-padding {
+        &-xsmall {
+            padding-top: responsive_sizing(16, 24);
+            padding-bottom: responsive_sizing(16, 24);
+        }
+        &-small {
+            padding-top: responsive_sizing(24, 48);
+            padding-bottom: responsive_sizing(24, 48);
+        }
+        &-medium {
+            padding-top: responsive_sizing(38, 54);
+            padding-bottom: responsive_sizing(38, 54);
+        }
+        &-large {
+            padding-top: responsive_sizing(50, 90);
+            padding-bottom: responsive_sizing(50, 90);
+        }
+        &-xlarge {
+            padding-top: responsive_sizing(80, 95);
+            padding-bottom: responsive_sizing(80, 95);
+        }
+    }
+    &-margin {
+        &-xsmall {
+            margin-top: responsive_sizing(16, 24);
+            margin-bottom: responsive_sizing(16, 24);
+        }
+        &-small {
+            margin-top: responsive_sizing(24, 48);
+            margin-bottom: responsive_sizing(24, 48);
+        }
+        &-medium {
+            margin-top: responsive_sizing(38, 54);
+            margin-bottom: responsive_sizing(38, 54);
+        }
+        &-large {
+            margin-top: responsive_sizing(50, 90);
+            margin-bottom: responsive_sizing(50, 90);
+        }
+        &-xlarge {
+            margin-top: responsive_sizing(80, 95);
+            margin-bottom: responsive_sizing(80, 95);
+        }
+    }
+}

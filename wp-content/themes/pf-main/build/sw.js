@@ -109,6 +109,9 @@ self.addEventListener('message', function (event) {
       });
     } else if (action === 'skipWaiting') {
       self.skipWaiting();
+    } else if (action === 'log' && event.data.message) {
+      console.log('hello from service worker');
+      console.log(event.data.message);
     }
   }
 });

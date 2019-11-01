@@ -12,3 +12,9 @@
         </div>
     </div>
 </div>
+<div class="section-margin-small">
+    <div class="grid-container text-center">
+        <h2>Check Out The PWA Demo</h2>
+        <a href="/pwa/" class="button large">Install PWA</a>
+    </div>
+</div>
