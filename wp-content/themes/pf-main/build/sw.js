@@ -28,6 +28,8 @@ self.addEventListener('activate', function (event) {
 self.addEventListener('fetch', function (event) {
   // Parse the URL
   let requestURL = new URL(event.request.url);
+  // Get the client ID so we can interact with the DOM
+  let clientID = event.clientId;
   // Make sure we're only caching GET requests from our site
   // as well as google fonts (this may be site-specific)
   if ( (requestURL.origin === location.origin ||
@@ -43,22 +45,6 @@ self.addEventListener('fetch', function (event) {
           // If we've got a response from the cache and the user
           // didn't force a reload then we'll return the cache response
           if (response && !event.isReload) {
-            if (/text\/html/.test(response.headers.get('Content-Type'))) {
-              // If this is an HTML request, we're going to return the cache response
-              // immediately, but we'll try to grab the latest response from the server
-              // in the background
-
-              event.waitUntil(
-                caches.open(CACHE_NAME)
-                  .then(function (cache) {
-                    // Uncomment this code to remove console error caused by Chromium bug #823392
-                    // if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
-                    //   return;
-                    // }
-                    return cache.add(event.request.url);
-                  }).catch()
-              );
-            }
             return response;
           }
 
@@ -112,6 +98,33 @@ self.addEventListener('message', function (event) {
     } else if (action === 'log' && event.data.message) {
       console.log('hello from service worker');
       console.log(event.data.message);
+    } else if (action === 'checkPage' && event.data.url) {
+      let clientID = event.source.id;
+      fetch(event.data.url).then(async (response) => {
+        let updateCache = false;
+        let resToCache = null;
+        const client = await clients.get(clientID);
+        if (client) {
+          let cache = await caches.open(CACHE_NAME);
+          let cacheClone = await cache.match(event.data.url);
+          if (response.status === 200) {
+            resToCache = response.clone();
+            let oldBody = await cacheClone.text();
+            let newBody = await response.text();
+            if (oldBody !== newBody) {
+              console.log('they\'re not equal!');
+              updateCache = true;
+            }
+          }
+        }
+        if (updateCache) {
+          let cache = await caches.open(CACHE_NAME);
+          let wait = await cache.put(event.data.url, resToCache);
+          client.postMessage({
+            action: 'update'
+          });
+        }
+      });
     }
   }
 });

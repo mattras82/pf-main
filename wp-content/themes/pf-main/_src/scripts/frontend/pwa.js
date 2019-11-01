@@ -19,6 +19,7 @@ function sendMessage(worker = null, message = {}) {
 }
 
 function addCurrentPage(worker = null) {
+  updateStatus('installed');
   sendMessage(worker, {
     action: 'cache',
     url: location.href
@@ -45,6 +46,20 @@ function updateStatus(status = '') {
   }
 }
 
+function asyncUpdate(callback = null) {
+  let $button = document.querySelector('#update-sw');
+  if ($button) {
+    $button.classList.add('active');
+    updateStatus('waiting');
+
+    if (typeof callback !== 'function') {
+      callback = () => {};
+    }
+
+    $button.addEventListener('click', callback);
+  }
+}
+
 function updateWorker(reg = null) {
   if (reg) {
     updateStatus('installing');
@@ -52,19 +67,13 @@ function updateWorker(reg = null) {
     installingWorker.onstatechange = () => {
       if (installingWorker.state === 'installed' &&
         navigator.serviceWorker.controller) {
-        let $button = document.querySelector('#update-sw');
-        if ($button) {
-          $button.classList.add('active');
-          updateStatus('waiting');
-
-          $button.addEventListener('click', (e) => {
-            e.preventDefault();
-            sendMessage(installingWorker, {
-              action: 'skipWaiting'
-            });
-            setTimeout(() => { location.reload()}, 1000);
+        asyncUpdate((e) => {
+          e.preventDefault();
+          sendMessage(installingWorker, {
+            action: 'skipWaiting'
           });
-        }
+          setTimeout(() => { location.reload()}, 1000);
+        });
       }
     };
   }
@@ -78,6 +87,10 @@ function registerSW() {
       if (typeof reg === 'object' && reg.active) {
         // We've already registered this service worker
         updateStatus('installed');
+        sendMessage(reg.active, {
+          action: 'checkPage',
+          url: location.href
+        });
         reg.onupdatefound = () => { updateWorker(reg) };
         return true;
       } else {
@@ -105,6 +118,19 @@ function registerSW() {
         });
       }
     });
+    navigator.serviceWorker.addEventListener('message', processMessage);
+  }
+}
+
+function processMessage(event) {
+  if (event.data) {
+    console.log('processing message', event.data);
+    if (event.data.action === 'update') {
+      asyncUpdate((e) => {
+        e.preventDefault();
+        location.reload();
+      });
+    }
   }
 }
 
