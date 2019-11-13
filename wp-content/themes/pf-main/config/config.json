@@ -1,8 +1,8 @@
 {
   "debug": false,
   "env": {
-    "development": false,
-    "production": true
+    "development": true,
+    "production": false
   },
   "theme": {
     "name": "Public Function, LLC Website",

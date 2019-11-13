@@ -8,4 +8,8 @@
     @include e(content) {
         flex: 0 auto;
     }
+
+    @include e(icon) {
+        @include responsive_text(90, 100);
+    }
 }

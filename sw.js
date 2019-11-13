@@ -14,6 +14,7 @@ self.addEventListener('install', function (event) {
     caches.open(CACHE_NAME)
       .then(function (cache) {
         // Cache all predetermined urls
+        console.log('hello from service worker');
         return cache.addAll(urlsToCache);
       })
   );

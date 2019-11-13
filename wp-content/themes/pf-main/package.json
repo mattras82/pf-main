@@ -4,7 +4,7 @@
   "description": "PublicFunction's WordPress Theme",
   "private": true,
   "dependencies": {
-    "@babel/polyfill": "^7.6.0",
+    "@babel/polyfill": "^7.7.0",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "foundation-sites": "^6.5.3",
     "jquery": "^3.4.1",
@@ -12,12 +12,12 @@
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
+    "@babel/core": "^7.7.2",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/preset-env": "^7.6.3",
-    "autoprefixer": "^9.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "autoprefixer": "^9.7.1",
     "babel-loader": "^8.0.5",
-    "copy-webpack-plugin": "^5.0.3",
+    "copy-webpack-plugin": "^5.0.5",
     "css-loader": "^2.1.1",
     "file-loader": "^3.0.1",
     "glob-all": "^3.1.0",
@@ -35,7 +35,7 @@
     "sharp": "^0.22.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
+    "webpack-cli": "^3.3.10",
     "webpack-merge": "^4.2.2",
     "what-input": "^5.2.6"
   },
