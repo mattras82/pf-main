@@ -7,7 +7,7 @@
                     <div class="cell auto">
                         <p class="h2 text-lowercase type-it type-it--after type-it--fade-left" data-type-it-delay="900">Creative digital solutions</p>
                         <div class="type-it type-it--after type-it--fade-left" data-type-it-delay="1200">
-                            <h1 class="h6">Public Function, LLC is a full-service digital solutions provider, specializing in personalized web development.</h1>
+                            <h1 class="h5 font-italic font-fans">Public Function, LLC is a full-service digital solutions provider, specializing in professional and personalized web development.</h1>
                         </div>
                     </div>
                     <div class="cell large-6 show-for-large text-center">
