@@ -27,26 +27,42 @@ function openPopup(network, data) {
 function processButtons($container) {
   if ($container.dataset.title && $container.dataset.url) {
     let postData = {
-      title: $container.dataset.title,
-      url: $container.dataset.url
+      title: encodeURIComponent($container.dataset.title),
+      url: encodeURIComponent($container.dataset.url)
     };
+    if ($container.dataset.desc) {
+      postData.desc = encodeURIComponent($container.dataset.desc);
+    }
+    if ($container.dataset.src) {
+      postData.src = encodeURIComponent($container.dataset.src);
+    }
+    let br = encodeURIComponent('\r\n');
     let networks = {
-      facebook: "//www.facebook.com/sharer.php?u=" + postData.url,
-      googleplus: "//plus.google.com/share?url=" + postData.url,
-      twitter: "https://twitter.com/intent/tweet?text=" + postData.url + " " + postData.title,
-      linkedin: "https://linkedin.com/shareArticle?mini=true&url=" + postData.url + "&title=" + postData.title
+      facebook: `https://www.facebook.com/sharer.php?u=${postData.url}`,
+      twitter: `https://twitter.com/intent/tweet?url=${postData.url}&text=${postData.title}`,
+      linkedin: `https://linkedin.com/shareArticle?mini=true&url=${postData.url}&title=${postData.title}` + (postData.desc ? `&summary=${postData.desc}` : '') + (postData.src ? `&source=${postData.src}` : ''),
+      email: `mailto:?to=&subject=${postData.title}&body=${postData.url}` + (postData.desc ? `${br}${postData.desc}` : '')
     };
-    $container.querySelectorAll('.social-sharing-link').forEach(function ($link) {
+    $container.querySelectorAll('[data-popup]').forEach(function ($link) {
+      if ($link.dataset.popup === 'email') {
+        $link.href = networks[$link.dataset.popup];
+        return true;
+      }
       $link.addEventListener('click', function () {
-        openPopup(networks[this.dataset.popup], postData);
+        openPopup(networks[$link.dataset.popup], postData);
       });
     });
   }
 }
 
 function init($containers) {
-  polyfills();
-  $containers.forEach(processButtons);
+  return Promise.resolve({
+    then: f => {
+      polyfills();
+      $containers.forEach(processButtons);
+      f();
+    }
+  })
 }
 
 export {

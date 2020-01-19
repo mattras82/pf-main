@@ -1,11 +1,11 @@
-const CACHE_NAME = 'pf-main-prkb2b82-site-cache';
+const CACHE_NAME = 'pf-main-2kspocpg-site-cache';
 const urlsToCache = [
 	location.origin,
 	location.origin + '/offline.html',
 	location.origin + '/wp-content/themes/pf-main/assets/images/logo.png',
 	location.origin + '/wp-content/themes/pf-main/assets/jquery.min.js',
-	location.origin + '/wp-content/themes/pf-main/assets/theme.css?ver=prkb2b82',
-	location.origin + '/wp-content/themes/pf-main/assets/theme.js?ver=prkb2b82',
+	location.origin + '/wp-content/themes/pf-main/assets/theme.css?ver=2kspocpg',
+	location.origin + '/wp-content/themes/pf-main/assets/theme.js?ver=2kspocpg',
 ]
 
 self.addEventListener('install', function (event) {
@@ -14,7 +14,6 @@ self.addEventListener('install', function (event) {
     caches.open(CACHE_NAME)
       .then(function (cache) {
         // Cache all predetermined urls
-        console.log('hello from service worker');
         return cache.addAll(urlsToCache);
       })
   );

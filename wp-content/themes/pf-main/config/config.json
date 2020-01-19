@@ -1,8 +1,8 @@
 {
   "debug": false,
   "env": {
-    "development": true,
-    "production": false
+    "development": false,
+    "production": true
   },
   "theme": {
     "name": "Public Function, LLC Website",
@@ -28,6 +28,15 @@
         "social-sharing": false,
         "smooth-scroll": false
       }
+    },
+    "image": {
+      "sizes": {
+        "pf-preview-admin": {
+          "width": 100,
+          "height": 100,
+          "crop": true
+        }
+      }
     }
   },
   "use_customizer": true,
@@ -37,5 +46,5 @@
   "use_jquery_migrate": false,
   "use_pwa": true,
   "version": "1.0.1",
-  "build": "prkb2b82"
+  "build": "2kspocpg"
 }

@@ -2,8 +2,8 @@ import $ from 'jquery';
 import file_upload from './file-upload';
 
 function meta_upload() {
-  let impflass = '.pf-metabox-image';
-  let $images = $(impflass);
+  let imgClass = '.pf-metabox-image';
+  let $images = $(imgClass);
   if($images.length === 0)
     return false;
 
@@ -11,7 +11,7 @@ function meta_upload() {
     let $image = $(this);
     let mediaType = $image.data('media-type');
     let mediaLabel = mediaType;
-    let $btn = $image.find(impflass+'-change-or-remove');
+    let $btn = $image.find(imgClass+'-change-or-remove');
     let uploader = file_upload.init();
 
     if (mediaType === 'media') {
@@ -28,26 +28,26 @@ function meta_upload() {
     if ($image.data('frame-title'))
       uploader.opts.title = $image.data('frame-title');
 
-    uploader.props.preview = $image.find(impflass+'-preview a');
-    uploader.props.attachment_url = $image.find(impflass+'-url');
-    uploader.props.attachment_id = $image.find(impflass+'-id');
+    uploader.props.preview = $image.find(imgClass+'-preview a');
+    uploader.props.attachment_url = $image.find(imgClass+'-url');
+    uploader.props.attachment_id = $image.find(imgClass+'-id');
 
     function changeImage() {
       file_upload.upload(uploader, function() {
         $image.addClass('has-image');
         $btn.text('Remove '+mediaLabel);
-        $image.find(impflass+'-preview').show();
+        $image.find(imgClass+'-preview').show();
       });
 
       return false;
     }
 
-    $image.find(impflass+'-change-image').on('click', function(e) {
+    $image.find(imgClass+'-change-image').on('click', function(e) {
       e.preventDefault();
       return changeImage();
     });
 
-    $image.find(impflass+'-change-or-remove').on('click',  function(e) {
+    $image.find(imgClass+'-change-or-remove').on('click',  function(e) {
       e.preventDefault();
 
       // Remove image
@@ -55,7 +55,7 @@ function meta_upload() {
         uploader.props.attachment_url.val('');
         uploader.props.attachment_id.val('');
         $btn.text('Add '+mediaLabel);
-        $image.removeClass('has-image').find(impflass+'-preview').hide();
+        $image.removeClass('has-image').find(imgClass+'-preview').hide();
         return false;
       }
 

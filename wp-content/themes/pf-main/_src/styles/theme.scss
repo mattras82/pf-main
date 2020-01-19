@@ -55,7 +55,7 @@
 //@include foundation-tooltip;
 //@include foundation-top-bar;
 @include foundation-visibility-classes;
-@include foundation-float-classes;
+//@include foundation-float-classes;
 
 @if $global-flexbox {
   @include foundation-flex-classes;
@@ -89,12 +89,27 @@
   }
 }
 
-img[data-src] {
-  transition: opacity 200ms ease-in-out;
+img {
+  &.queued,
+  &.loading,
+  &.loaded {
+    transition: opacity 200ms ease-in-out;
 
-  &.no-js {
-    display: none;
+    &.img-move {
+      transition-property: opacity, transform;
+    }
   }
+
+  &.queued,
+  &.loading {
+    background-color: $light-gray;
+
+    &:not([width]) {
+      min-height: rem-calc(55);
+      min-width: rem-calc(55);
+    }
+  }
+
   &.loading {
     opacity: 0.5;
   }
@@ -118,3 +133,7 @@ img[data-src] {
 @import "frontend/footer";
 @import "frontend/social-links";
 @import "frontend/pwa";
+
+.img-move {
+  transition: transform 200ms ease-in-out;
+}

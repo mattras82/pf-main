@@ -40,10 +40,12 @@ import './frontend/lazy-images';
 import pwa from './frontend/pwa';
 import './frontend/component-loader';
 import TypeIt from './frontend/type-it';
+import ImgMove from './frontend/img-move';
 
 let modules = [];
 
 modules.push(TypeIt);
+modules.push(ImgMove);
 
 $(document).ready(function() {
   // FOUNDATION

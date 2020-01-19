@@ -17,7 +17,10 @@ function initComponents() {
     if (component.activeSelector) {
       let items = document.querySelectorAll(component.activeSelector);
       if (items && items.length > 0) {
-        component.init(items);
+        let init = component.init(items);
+        if (init && init.catch) {
+          init.catch(e => console.warn(`Error in ${component.activeSelector} module:\n${e}`));
+        }
       }
     }
   });

@@ -9,12 +9,14 @@
         flex: 0 auto;
 
         h2, .h2 {
-            border-bottom: 1px solid $primary-color;
-            display: inline-block;
+            @include breakpoint(large) {
+                border-bottom: 1px solid $primary-color;
+                display: inline-block;
+            }
         }
     }
 
     @include e(icon) {
-        @include responsive_text(90, 100);
+        @include responsive_text(90, 150);
     }
 }

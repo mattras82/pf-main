@@ -33,7 +33,7 @@ class SmoothScroll {
   run() {
     if (window.pfSmoothScroll) return false;
     if (document.querySelector('.lightbox-transition, .lightbox-open')) {
-      document.addEventListener('lightbox-closed', this.smoothScroll.bind(this), {once:true});
+      document.addEventListener('lightbox-closed', this.run.bind(this), {once:true});
       return false;
     }
     this.interval = setInterval(this.smoothScroll.bind(this), interval);
@@ -45,13 +45,17 @@ class SmoothScroll {
     if (cookies.get('smooth-scroll')) cookies.delete('smooth-scroll');
     window.pfSmoothScroll = undefined;
   }
+  
+  animate() {
+    window.scrollTo(0, this.yPos);
+    this.yPos = null;
+    this.animating = false;
+  }
 
   scroll(yPos) {
     if (!this.animating) {
-      window.requestAnimationFrame(function () {
-        window.scrollTo(0, yPos);
-        this.animating = false;
-      });
+      this.yPos = yPos;
+      window.requestAnimationFrame(this.animate.bind(this));
       this.animating = true;
     }
   }
@@ -103,9 +107,14 @@ function handleClick(e) {
 }
 
 function init($links) {
-  $links.forEach(($link) => {
-    $link.addEventListener('click', handleClick);
-  });
+  return Promise.resolve({
+    then: f => {
+      $links.forEach(($link) => {
+        $link.addEventListener('click', handleClick);
+      });
+      f();
+    }
+  })
 }
 
 function pageLoad() {

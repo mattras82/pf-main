@@ -59,7 +59,7 @@ function polyfills() {
     };
   }
   if (typeof window.CustomEvent !== 'function') {
-    function CustomEvent ( event, params ) {
+    const CustomEvent = ( event, params ) => {
       params = params || { bubbles: false, cancelable: false, detail: undefined };
       let evt = document.createEvent( 'CustomEvent' );
       evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
@@ -259,7 +259,12 @@ function handleClick(e) {
     }
   } else if (($content = $this.querySelector('[data-lb-content]')) || ($content = $this.querySelector('.lightbox-content'))) {
     if (!$content.classList.contains('lightbox-loaded')) preLoadContent($content);
-    content = stringToHTML($content.innerHTML);
+    if (typeof $this.dataset.lbCopy === 'string') {
+      content = stringToHTML($content.innerHTML);
+    } else {
+      content = $content;
+      $contentParent = $content.parentNode;
+    }
   }
   if ($this.dataset.lbClass) {
     $this.dataset.lbClass.split(' ').forEach(val => tempClasses.push(val));
@@ -281,12 +286,16 @@ function addListener($el) {
 }
 
 function init($links) {
-  polyfills();
-  $body = document.querySelector('.off-canvas-content');
-  addElements();
-  addListeners($links);
-  openedEvent = new CustomEvent('lightbox-opened');
-  closedEvent = new CustomEvent('lightbox-closed');
+  return Promise.resolve({
+    then: f => {
+      polyfills();
+      $body = document.querySelector('.off-canvas-content');
+      addElements();
+      addListeners($links);
+      openedEvent = new CustomEvent('lightbox-opened');
+      closedEvent = new CustomEvent('lightbox-closed');
+    }
+  });
 }
 
 export {

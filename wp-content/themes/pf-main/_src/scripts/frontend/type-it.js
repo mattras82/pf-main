@@ -6,18 +6,22 @@ class TypeIt {
         this.letters = [];
         this.runningAfter = false;
         this.activeSelector = '.type-it';
-        return this.activeSelector;
     }
 
     init($els) {
-        this.$baseNode = document.createElement('span');
-        this.$baseNode.classList.add('type-it--waiting');
-        this.$blinkNode = document.createElement('span');
-        this.$blinkNode.classList.add('type-it__blink');
-        this.$blinkNode.innerHTML = '|';
-        this.doneEvent = document.createEvent('CustomEvent');
-        this.doneEvent.initEvent('type-it-done', true, false);
-        this.timeout(500).then(r => this.run($els));
+        return Promise.resolve({
+            then: f => {
+                this.$baseNode = document.createElement('span');
+                this.$baseNode.classList.add('type-it--waiting');
+                this.$blinkNode = document.createElement('span');
+                this.$blinkNode.classList.add('type-it__blink');
+                this.$blinkNode.innerHTML = '|';
+                this.doneEvent = document.createEvent('CustomEvent');
+                this.doneEvent.initEvent('type-it-done', true, false);
+                this.timeout(500).then(r => this.run($els));
+                f();
+            }
+        });
     }
 
     run($els) {
