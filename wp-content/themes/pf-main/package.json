@@ -7,7 +7,7 @@
     "@babel/polyfill": "^7.6.0",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "foundation-sites": "^6.5.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-mask-plugin": "^1.14.15",
     "slick-carousel": "^1.8.1"
   },
